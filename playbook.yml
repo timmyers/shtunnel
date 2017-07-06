@@ -1,0 +1,30 @@
+- hosts: all
+  tasks:
+    - name: Download nodejs ppa setup script
+      get_url:
+        url: https://deb.nodesource.com/setup_8.x
+        dest: /tmp
+        mode: u+rwx
+
+    - name: Execute nodejs ppa setup script
+      shell: /tmp/setup_8.x
+
+    - name: Install nodejs
+      apt: name=nodejs
+
+    - name: Install app
+      synchronize:
+        src: ./client
+        dest: ~/
+
+    - name: Install app dependencies
+      command: npm install
+      args:
+        chdir: ~/client
+
+    - name: Run app
+      command: node index.js &
+      args:
+        chdir: ~/client
+      register: app_output
+    - debug: var=app_output.stdout_lines
