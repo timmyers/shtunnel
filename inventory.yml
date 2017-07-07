@@ -1,5 +1,5 @@
 ungrouped:
   hosts:
-    192.241.207.159:
+    107.170.235.24:
       ansible_user: root
       ansible_python_interpreter: /usr/bin/python3

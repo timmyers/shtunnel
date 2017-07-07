@@ -22,6 +22,20 @@ resource "digitalocean_domain" "tmye-me" {
   ip_address = "${digitalocean_droplet.web.ipv4_address}"
 }
 
+resource "digitalocean_record" "shtunnel-tmye-me" {
+  domain     = "${digitalocean_domain.tmye-me.name}"
+  name       = "shtunnel"
+  type       = "A"
+  value      = "${digitalocean_droplet.web.ipv4_address}"
+}
+
+resource "digitalocean_record" "wildcard-shtunnel-tmye-me" {
+  domain     = "${digitalocean_domain.tmye-me.name}"
+  name       = "*.shtunnel"
+  type       = "A"
+  value      = "${digitalocean_droplet.web.ipv4_address}"
+}
+
 output "webip" {
   value = "${digitalocean_droplet.web.ipv4_address}"
 }
